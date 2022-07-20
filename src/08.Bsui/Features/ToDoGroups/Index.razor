@@ -1,0 +1,41 @@
+﻿@page "/ToDoGroups"
+
+
+@using Zeta.CodebaseExpress.Shared.ToDoGroups.Queries.GetToDoGroups
+
+<BrowserTabTitle>@DisplayTextFor.ToDoGroups</BrowserTabTitle>
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<PageHeader Title="@DisplayTextFor.ToDoGroups" />
+<ErrorViewer Error="_error" />
+
+<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
+          FixedHeader="true" Height="@HeightFor.ScrollableTable"
+          @ref="_tableToDoGroups"
+          ServerData="@(new Func<TableState, Task<TableData<GetToDoGroupsToDoGroup>>>(ReloadTableToDoGroups))">
+    <ToolBarContent>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogCreate">@CommonDisplayTextFor.Create @DisplayTextFor.Group</MudButton>
+        <MudSpacer />
+        <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortLabel="@nameof(GetToDoGroupsToDoGroup.Name)" T="GetToDoGroupsToDoGroup">@DisplayTextFor.Name</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="@nameof(GetToDoGroupsToDoGroup.Created)" T="GetToDoGroupsToDoGroup">@CommonDisplayTextFor.Created</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="@nameof(GetToDoGroupsToDoGroup.Modified)" T="GetToDoGroupsToDoGroup">@CommonDisplayTextFor.Modified</MudTableSortLabel></MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@DisplayTextFor.Name">
+            <MudLink Href="@RouteFor.Details(context.Id)">
+                <MudHighlighter Text="@context.Name" HighlightedText="@_searchKeyword" />
+            </MudLink>
+        </MudTd>
+        <MudTd DataLabel="@CommonDisplayTextFor.Created">
+            @context.Created.ToLongDateTimeDisplayText()
+        </MudTd>
+        <MudTd DataLabel="@CommonDisplayTextFor.Modified">
+            @context.Modified.ToLongDateTimeDisplayText()
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>

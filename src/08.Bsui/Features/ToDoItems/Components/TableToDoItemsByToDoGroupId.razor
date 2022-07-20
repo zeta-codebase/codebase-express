@@ -1,0 +1,47 @@
+﻿@using Zeta.CodebaseExpress.Shared.ToDoItems.Queries.GetToDoItemsByToDoGroupId
+
+<ErrorViewer Error="_error" />
+<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
+          FixedHeader="true" Height="@HeightFor.ScrollableTable"
+          @ref="_tableToDoItems"
+          ServerData="@(new Func<TableState, Task<TableData<GetToDoItemsByToDoGroupIdToDoItem>>>(ReloadTableToDoItems))">
+    <ToolBarContent>
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogCreate">@CommonDisplayTextFor.Create @DisplayTextFor.ToDoItem</MudButton>
+        <MudSpacer />
+        <MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async (keyword) => await OnSearch(keyword))"></MudTextField>
+    </ToolBarContent>
+    <HeaderContent>
+        <MudTh><MudTableSortLabel SortLabel="@nameof(GetToDoItemsByToDoGroupIdToDoItem.Title)" T="GetToDoItemsByToDoGroupIdToDoItem">@DisplayTextFor.Title</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="@nameof(GetToDoItemsByToDoGroupIdToDoItem.PriorityLevel)" T="GetToDoItemsByToDoGroupIdToDoItem">@DisplayTextFor.PriorityLevel</MudTableSortLabel></MudTh>
+        <MudTh><MudTableSortLabel SortLabel="@nameof(GetToDoItemsByToDoGroupIdToDoItem.IsDone)" T="GetToDoItemsByToDoGroupIdToDoItem">@DisplayTextFor.Status</MudTableSortLabel></MudTh>
+        <MudTh></MudTh>
+        <MudTh>@CommonDisplayTextFor.Action</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd DataLabel="@DisplayTextFor.Title">
+            <MudHighlighter Text="@context.Title" HighlightedText="@_searchKeyword" />
+        </MudTd>
+        <MudTd DataLabel="@DisplayTextFor.PriorityLevel">
+            @context.PriorityLevel.GetDescription()
+        </MudTd>
+        <MudTd DataLabel="@DisplayTextFor.Status">
+            <MudText>@context.IsDone.ToDoneUndoneDisplayText()</MudText>
+        </MudTd>
+        <MudTd>
+            @{
+                var buttonText = context.IsDone ? "Set as not done" : "Set as done";
+            }
+            <MudButton Variant="Variant.Filled" Color="Color.Secondary" Size="Size.Small" OnClick="@(async () => await ToggleIsDone(context))">
+                @buttonText
+            </MudButton>
+        </MudTd>
+        <MudTd DataLabel="@CommonDisplayTextFor.Action">
+            <MudIconButton Color="Color.Primary" Icon="@Icons.Material.Filled.Article" OnClick="() => ShowDialogDetails(context.Id)"></MudIconButton>
+            <MudIconButton Color="Color.Secondary" Icon="@Icons.Material.Filled.Edit" OnClick="() => ShowDialogEdit(context)"></MudIconButton>
+            <MudIconButton Color="Color.Dark" Icon="@Icons.Material.Filled.Delete" OnClick="() => ShowDialogDelete(context)"></MudIconButton>
+        </MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>

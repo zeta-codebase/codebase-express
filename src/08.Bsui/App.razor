@@ -1,0 +1,17 @@
+@using Zeta.CodebaseExpress.Bsui.Layouts
+
+<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found Context="routeData">
+            <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+            </RouteView>
+        </Found>
+        <NotFound>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <BrowserTabTitle>404 Not Found</BrowserTabTitle>
+                <PageHeader Title="404 Not Found" />
+                <MudText Typo="Typo.body1">The resource you're looking for is not found.</MudText>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

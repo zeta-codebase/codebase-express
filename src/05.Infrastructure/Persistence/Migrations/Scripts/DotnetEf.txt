@@ -1,0 +1,10 @@
+﻿dotnet tool update --global dotnet-ef
+set ASPNETCORE_ENVIRONMENT=Local
+
+dotnet ef migrations add ApplicationDbContext_001_InitialSchema --context ApplicationDbContext --project src/05.Infrastructure --startup-project src/06.WebApi --output-dir Persistence/Migrations
+
+dotnet ef migrations remove  --context ApplicationDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
+
+dotnet ef database update --context ApplicationDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
+
+dotnet ef database drop --force --context ApplicationDbContext --project src/05.Infrastructure --startup-project src/06.WebApi

@@ -1,0 +1,33 @@
+﻿<MudDialog>
+    <DialogContent>
+        <LoadingLinear IsVisible="_isLoading" />
+        <ErrorViewer Error="_error" />
+        <EditForm Model="Request" OnInvalidSubmit="OnInvalidSubmit" OnValidSubmit="OnValidSubmit">
+            <FluentValidationValidator />
+            <MudFocusTrap>
+                <MudGrid>
+                    <MudItem xs="12">
+                        <MudTextField Label="@DisplayTextFor.Title" Required="true" @bind-Value="Request.Title" />
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudSelect Label="@DisplayTextFor.PriorityLevel"
+                           Required="true" T="PriorityLevel"
+                           @bind-Value="Request.PriorityLevel">
+                            @foreach (PriorityLevel priorityLevel in Enum.GetValues(typeof(PriorityLevel)))
+                            {
+                                <MudSelectItem Value="@priorityLevel" />
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudTextField Label="@DisplayTextFor.Description" Required="true" Lines="5" @bind-Value="Request.Description" />
+                    </MudItem>
+                </MudGrid>
+            </MudFocusTrap>
+            <BottomButtonPanel>
+                <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Update</MudButton>
+            </BottomButtonPanel>
+        </EditForm>
+    </DialogContent>
+</MudDialog>

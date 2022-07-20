@@ -1,0 +1,32 @@
+﻿<MudDialog>
+    <DialogContent>
+        <LoadingLinear IsVisible="_isLoading" />
+        <ErrorViewer Error="_error" />
+        @if (_toDoItem is not null)
+        {
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudField Label="@DisplayTextFor.Title">@_toDoItem.Title</MudField>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudField Label="@DisplayTextFor.PriorityLevel">@_toDoItem.PriorityLevel.GetDescription()</MudField>
+                </MudItem>
+                <MudItem xs="6">
+                    <MudField Label="@DisplayTextFor.Status">@_toDoItem.IsDone.ToDoneUndoneDisplayText()</MudField>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudField Label="@DisplayTextFor.Description" Class="text-multiline">@_toDoItem.Description</MudField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudField Label="@CommonDisplayTextFor.Created">@_toDoItem.Created.ToLongDateTimeDisplayText()</MudField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudField Label="@CommonDisplayTextFor.Modified">@_toDoItem.Modified.ToLongDateTimeDisplayText()</MudField>
+                </MudItem>
+            </MudGrid>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="Color.Primary" OnClick="Close">Ok</MudButton>
+    </DialogActions>
+</MudDialog>

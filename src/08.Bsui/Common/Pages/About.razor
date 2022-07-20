@@ -1,0 +1,35 @@
+﻿@page "/About"
+
+@using Zeta.CodebaseExpress.Bsui.Services.AppInfo
+
+@inject IOptions<AppInfoOptions> _appInfoOptions
+
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<PageHeader Title="About" />
+<MudPaper>
+    <MudList Clickable="true">
+        <MudListItem><b>Application Name</b>: @_appInfoOptions.Value.FullName</MudListItem>
+        <MudDivider />
+        <MudListItem><b>Application Description</b>: @_appInfoOptions.Value.Description</MudListItem>
+        <MudDivider />
+        <MudListItem><b>Application Version</b>: @CommonValueFor.EntryAssemblyInformationalVersion</MudListItem>
+        <MudDivider />
+        <MudListItem><b>Application Last Build</b>: @CommonValueFor.EntryAssemblyLastBuild.ToLongDateTimeDisplayText()</MudListItem>
+    </MudList>
+</MudPaper>
+<MudSimpleTable Elevation="5" Class="my-8">
+    <tbody>
+        <tr>
+            <td><b>Environment Name</b></td>
+            <td>@CommonValueFor.EnvironmentName</td>
+        </tr>
+        <tr>
+            <td><b>Operating System</b></td>
+            <td>@CommonValueFor.OperatingSystemDescription</td>
+        </tr>
+        <tr>
+            <td><b>ASP.NET Version</b></td>
+            <td>@CommonValueFor.EntryAssemblyFrameworkName</td>
+        </tr>
+    </tbody>
+</MudSimpleTable>

@@ -1,0 +1,16 @@
+{
+  "profiles":
+  {
+    "Zeta.CodebaseExpress.Bsui":
+    {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:44322",
+      "environmentVariables":
+      {
+        "ASPNETCORE_ENVIRONMENT": "Local"
+      }
+    }
+  }
+}

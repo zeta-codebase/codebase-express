@@ -1,0 +1,32 @@
+﻿@page "/ToDoGroups/Details/{ToDoGroupId:guid}"
+
+@using Zeta.CodebaseExpress.Bsui.Features.ToDoGroups.Components
+@using Zeta.CodebaseExpress.Bsui.Features.ToDoItems.Components
+
+<BrowserTabTitle>@_browserTabTitle</BrowserTabTitle>
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<Loading IsVisible="_isLoading" />
+<ErrorViewer Error="_error" />
+
+@if (_toDoGroup is not null)
+{
+    <MudStack>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.h3" Class="me-6">@_toDoGroup.Name</MudText>
+            <MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Small" DisableElevation="true" OnClick="ShowDialogEdit" />
+            <MudFab Color="Color.Dark" StartIcon="@Icons.Material.Filled.Delete" Size="Size.Small" DisableElevation="true" OnClick="ShowDialogDelete" />
+        </MudStack>
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudText Typo="Typo.caption">Created on @_toDoGroup.Created.ToLongDateTimeDisplayText()</MudText>
+            @if (@_toDoGroup.Modified.HasValue)
+            {
+                <MudDivider FlexItem="true" Vertical="true" />
+                <MudText Typo="Typo.caption">Modified on @_toDoGroup.Modified.ToLongDateTimeDisplayText()</MudText>
+            }
+        </MudStack>
+    </MudStack>
+    <MudPaper Elevation="0" Class="mt-10">
+        <TableToDoItemsByToDoGroupId ToDoGroupId="@_toDoGroup.Id" />
+    </MudPaper>
+}
+

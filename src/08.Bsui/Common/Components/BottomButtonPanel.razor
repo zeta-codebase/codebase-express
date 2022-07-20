@@ -1,0 +1,8 @@
+﻿<MudStack Row="true" Justify="Justify.FlexEnd" Class="mt-6">
+    @ChildContent
+</MudStack>
+
+@code {
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}
