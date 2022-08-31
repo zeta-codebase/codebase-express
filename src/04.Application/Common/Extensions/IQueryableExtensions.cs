@@ -4,7 +4,7 @@ using Zeta.CodebaseExpress.Application.Common.Models;
 
 namespace Zeta.CodebaseExpress.Application.Common.Extensions;
 
-public static class IQueryableExtension
+public static class IQueryableExtensions
 {
     public static Task<PaginatedList<T>> ToPaginatedListAsync<T>(this IQueryable<T> queryable, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
