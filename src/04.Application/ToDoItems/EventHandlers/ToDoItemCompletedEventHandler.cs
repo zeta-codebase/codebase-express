@@ -16,7 +16,9 @@ public class ToDoItemCompletedEventHandler : INotificationHandler<DomainEventNot
 
     public Task Handle(DomainEventNotification<ToDoItemCompletedEvent> notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("CodebaseExpress Domain Event: {DomainEvent}", notification.GetType().Name);
+        var domainEvent = notification.DomainEvent;
+
+        _logger.LogInformation("CodebaseExpress Domain Event: {DomainEvent}", domainEvent.GetType().Name);
 
         return Task.CompletedTask;
     }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Zeta.CodebaseExpress.Application.Services.Persistence;
 using Zeta.CodebaseExpress.Domain.Entities;
 using Zeta.CodebaseExpress.Infrastructure.Persistence.Common.Constants;
+using Zeta.CodebaseExpress.Infrastructure.Persistence.Common.Extensions;
 using Zeta.CodebaseExpress.Shared.ToDoItems.Constants;
 
 namespace Zeta.CodebaseExpress.Infrastructure.Persistence.SqlServer.Configuration;
@@ -12,6 +13,7 @@ public class ToDoItemConfiguration : IEntityTypeConfiguration<ToDoItem>
     public void Configure(EntityTypeBuilder<ToDoItem> builder)
     {
         builder.ToTable(nameof(IApplicationDbContext.ToDoItems), nameof(CodebaseExpress));
+        builder.IgnoreDomainEventsProperties();
 
         builder.Property(e => e.Title).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Title));
         builder.Property(e => e.Description).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Description));

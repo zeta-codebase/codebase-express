@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Zeta.CodebaseExpress.Application.Common.Exceptions;
 using Zeta.CodebaseExpress.Application.Services.Persistence;
+using Zeta.CodebaseExpress.Domain.Events;
 using Zeta.CodebaseExpress.Shared.ToDoItems.Commands.UpdateToDoItemStatus;
 using Zeta.CodebaseExpress.Shared.ToDoItems.Constants;
 
@@ -41,6 +42,11 @@ public class UpdateToDoItemStatusCommandHandler : IRequestHandler<UpdateToDoItem
         }
 
         toDoItem.IsDone = request.IsDone;
+
+        if (toDoItem.IsDone)
+        {
+            toDoItem.DomainEvents.Add(new ToDoItemCompletedEvent(toDoItem));
+        }
 
         await _context.SaveChangesAsync(cancellationToken);
 

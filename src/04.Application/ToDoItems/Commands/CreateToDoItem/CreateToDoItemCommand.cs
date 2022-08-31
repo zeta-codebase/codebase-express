@@ -1,9 +1,11 @@
-﻿using FluentValidation;
+﻿using System.Net.Sockets;
+using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Zeta.CodebaseExpress.Application.Common.Exceptions;
 using Zeta.CodebaseExpress.Application.Services.Persistence;
 using Zeta.CodebaseExpress.Domain.Entities;
+using Zeta.CodebaseExpress.Domain.Events;
 using Zeta.CodebaseExpress.Shared.ToDoItems.Commands.CreateToDoItem;
 
 namespace Zeta.CodebaseExpress.Application.ToDoItems.Commands.CreateToDoItem;
@@ -50,6 +52,8 @@ public class CreateToDoItemCommandHandler : IRequestHandler<CreateToDoItemComman
             Description = request.Description,
             PriorityLevel = request.PriorityLevel
         };
+
+        toDoItem.DomainEvents.Add(new ToDoItemCreatedEvent(toDoItem));
 
         await _context.ToDoItems.AddAsync(toDoItem, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
