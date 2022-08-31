@@ -8,6 +8,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\04.Application\04.Application.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AspNetCore.HealthChecks.AzureStorage" Version="6.0.4" />
     <PackageReference Include="AspNetCore.HealthChecks.Hangfire" Version="6.0.2" />
     <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="6.0.2" />
@@ -45,8 +48,5 @@
     <PackageReference Include="System.ServiceModel.Http" Version="4.9.0" />
     <PackageReference Include="System.ServiceModel.Primitives" Version="4.9.0" />
     <PackageReference Include="Twilio" Version="5.75.2" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\04.Application\04.Application.csproj" />
   </ItemGroup>
 </Project>
